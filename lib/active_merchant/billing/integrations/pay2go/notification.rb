@@ -67,6 +67,10 @@ module ActiveMerchant #:nodoc:
             _params['Amt'].to_s
           end
 
+          def transaction_id
+            trade_no
+          end
+
           def trade_no
             _params['TradeNo']
           end
