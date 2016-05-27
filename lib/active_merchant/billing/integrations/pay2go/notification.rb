@@ -67,6 +67,12 @@ module ActiveMerchant #:nodoc:
             _params['Amt'].to_s
           end
 
+          # 訂單號碼
+          def item_id
+            merchant_order_no
+          end
+
+          # Pay2go 端訂單號碼
           def transaction_id
             trade_no
           end
