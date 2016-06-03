@@ -6,7 +6,7 @@ require 'digest/md5'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module Integrations #:nodoc:
-      module Pay2go
+      module Pay2goCvs
         class Helper < ActiveMerchant::Billing::Integrations::Helper
 
           ### 常見介面
@@ -73,14 +73,14 @@ module ActiveMerchant #:nodoc:
 
           def initialize(order, account, options = {})
             super
-            add_field 'MerchantID', ActiveMerchant::Billing::Integrations::Pay2go.merchant_id
+            add_field 'MerchantID', ActiveMerchant::Billing::Integrations::Pay2goCvs.merchant_id
           end
 
           def encrypted_data
 
-            url_encrypted_data = ActiveMerchant::Billing::Integrations::Pay2go.fetch_url_encode_data(@fields)
+            url_encrypted_data = ActiveMerchant::Billing::Integrations::Pay2goCvs.fetch_url_encode_data(@fields)
 
-            binding.pry if ActiveMerchant::Billing::Integrations::Pay2go.debug
+            binding.pry if ActiveMerchant::Billing::Integrations::Pay2goCvs.debug
 
             add_field 'CheckValue', url_encrypted_data
           end

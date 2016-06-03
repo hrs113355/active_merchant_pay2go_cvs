@@ -5,7 +5,7 @@ require 'json'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module Integrations #:nodoc:
-      module Pay2go
+      module Pay2goCvs
         class Notification < ActiveMerchant::Billing::Integrations::Notification
           attr_accessor :_params
 
@@ -44,7 +44,7 @@ module ActiveMerchant #:nodoc:
               "#{field}=#{value}" if check_fields.include?(field.to_sym)
             }.compact.join('&')
 
-            hash_raw_data = "HashIV=#{ActiveMerchant::Billing::Integrations::Pay2go.hash_iv}&#{raw_data}&HashKey=#{ActiveMerchant::Billing::Integrations::Pay2go.hash_key}"
+            hash_raw_data = "HashIV=#{ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_iv}&#{raw_data}&HashKey=#{ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_key}"
 
             sha256 = Digest::SHA256.new
             sha256.update hash_raw_data.force_encoding("utf-8")
@@ -72,7 +72,7 @@ module ActiveMerchant #:nodoc:
             merchant_order_no
           end
 
-          # Pay2go 端訂單號碼
+          # Pay2goCvs 端訂單號碼
           def transaction_id
             trade_no
           end

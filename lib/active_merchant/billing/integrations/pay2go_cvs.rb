@@ -1,12 +1,12 @@
-require File.dirname(__FILE__) + '/pay2go/helper.rb'
-require File.dirname(__FILE__) + '/pay2go/notification.rb'
+require File.dirname(__FILE__) + '/pay2go_cvs/helper.rb'
+require File.dirname(__FILE__) + '/pay2go_cvs/notification.rb'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module Integrations #:nodoc:
-      module Pay2go
-        autoload :Helper, 'active_merchant/billing/integrations/pay2go/helper.rb'
-        autoload :Notification, 'active_merchant/billing/integrations/pay2go/notification.rb'
+      module Pay2goCvs
+        autoload :Helper, 'active_merchant/billing/integrations/pay2go_cvs/helper.rb'
+        autoload :Notification, 'active_merchant/billing/integrations/pay2go_cvs/notification.rb'
 
         mattr_accessor :service_url
         mattr_accessor :merchant_id
@@ -18,11 +18,11 @@ module ActiveMerchant #:nodoc:
           mode = ActiveMerchant::Billing::Base.integration_mode
           case mode
             when :production
-              'https://api.pay2go.com/MPG/mpg_gateway'
+              'https://web.pay2go.com/gateway/cvs'
             when :development
-              'https://capi.pay2go.com/MPG/mpg_gateway'
+              'https://cweb.pay2go.com/API/gateway/cvs'
             when :test
-              'https://capi.pay2go.com/MPG/mpg_gateway'
+              'https://cweb.pay2go.com/API/gateway/cvs'
             else
               raise StandardError, "Integration mode set to an invalid value: #{mode}"
           end
@@ -42,7 +42,7 @@ module ActiveMerchant #:nodoc:
             "#{field}=#{value}" if check_fields.include?(field.to_sym)
           }.compact.join('&')
 
-          hash_raw_data = "HashKey=#{ActiveMerchant::Billing::Integrations::Pay2go.hash_key}&#{raw_data}&HashIV=#{ActiveMerchant::Billing::Integrations::Pay2go.hash_iv}"
+          hash_raw_data = "HashKey=#{ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_key}&#{raw_data}&HashIV=#{ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_iv}"
 
           sha256 = Digest::SHA256.new
           sha256.update hash_raw_data.force_encoding("utf-8")
