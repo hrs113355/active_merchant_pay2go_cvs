@@ -10,7 +10,6 @@ module ActiveMerchant #:nodoc:
         class Helper < ActiveMerchant::Billing::Integrations::Helper
 
           ### 常見介面
-
           # 廠商編號
           mapping :merchant_id, 'MerchantID'
           mapping :account, 'MerchantID' # AM common
@@ -36,11 +35,17 @@ module ActiveMerchant #:nodoc:
           mapping :expire_date, 'ExpireDate'
           # 付款人電子信箱
           mapping :email, 'Email'
+          mapping :credential3, 'CustomizedUrl'
 
           def initialize(order, account, options = {})
             super
             add_field 'MerchantID', ActiveMerchant::Billing::Integrations::Pay2goCvs.merchant_id
           end
+
+          def credential_based_url
+            @fields['CustomizedUrl']
+          end
+
         end
       end
     end
