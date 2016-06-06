@@ -46,6 +46,10 @@ module ActiveMerchant #:nodoc:
             @fields['CustomizedUrl']
           end
 
+          def encrypted_data
+            url_encrypted_data = ActiveMerchant::Billing::Integrations::Pay2goCvs.fetch_url_encode_data(@fields)
+            add_field 'CheckValue', url_encrypted_data
+          end
         end
       end
     end
