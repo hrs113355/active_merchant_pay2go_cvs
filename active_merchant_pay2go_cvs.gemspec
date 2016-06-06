@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'active_merchant_pay2go/version'
+require 'active_merchant_pay2go_cvs/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "active_merchant_pay2go"
-  spec.version       = ActiveMerchantPay2go::VERSION
-  spec.authors       = ["hothero"]
-  spec.email         = ["hothero0705@gmail.com"]
-  spec.description   = %q{A rails plugin to add active_merchant patch for Taiwan payment}
-  spec.summary       = %q{A rails plugin to add active_merchant patch for Taiwan payment}
-  spec.homepage      = "https://github.com/hothero/active_merchant_pay2go"
+  spec.name          = "active_merchant_pay2go_cvs"
+  spec.version       = ActiveMerchantPay2goCvs::VERSION
+  spec.authors       = ["hrs"]
+  spec.email         = ["hrs113355@gmail.com"]
+  spec.description   = %q{activermerchant plugin to implement Pay2go CVS gateway}
+  spec.summary       = %q{activermerchant plugin to implement Pay2go CVS gateway}
+  spec.homepage      = "https://github.com/hrs113355/active_merchant_pay2go_cvs"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
