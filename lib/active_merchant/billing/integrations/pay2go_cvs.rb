@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/pay2go_cvs/helper.rb'
 require File.dirname(__FILE__) + '/pay2go_cvs/notification.rb'
+require File.dirname(__FILE__) + '/pay2go_cvs/fetcher.rb'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
@@ -7,24 +8,28 @@ module ActiveMerchant #:nodoc:
       module Pay2goCvs
         autoload :Helper, 'active_merchant/billing/integrations/pay2go_cvs/helper.rb'
         autoload :Notification, 'active_merchant/billing/integrations/pay2go_cvs/notification.rb'
+        autoload :Fetcher, 'active_merchant/billing/integrations/pay2go_cvs/fetcher.rb'
 
+        # 網站內部 controller 接收原始 post data 的 URL
         mattr_accessor :service_url
+        # CVS API gateway 的 URL
+        mattr_accessor :gateway_url
         mattr_accessor :merchant_id
         mattr_accessor :hash_key
         mattr_accessor :hash_iv
         mattr_accessor :debug
 
-        def self.service_url
+        def self.gateway_url
           mode = ActiveMerchant::Billing::Base.integration_mode
           case mode
-            when :production
-              'https://web.pay2go.com/gateway/cvs'
-            when :development
-              'https://cweb.pay2go.com/API/gateway/cvs'
-            when :test
-              'https://cweb.pay2go.com/API/gateway/cvs'
-            else
-              raise StandardError, "Integration mode set to an invalid value: #{mode}"
+          when :production
+            'https://web.pay2go.com/gateway/cvs'
+          when :development
+            'https://cweb.pay2go.com/API/gateway/cvs'
+          when :test
+            'https://cweb.pay2go.com/API/gateway/cvs'
+          else
+            raise StandardError, "Integration mode set to an invalid value: #{mode}"
           end
         end
 
