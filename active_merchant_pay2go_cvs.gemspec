@@ -18,11 +18,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'activemerchant', '>= 1.42'
+  spec.add_dependency 'activemerchant', '< 1.43'
   spec.add_development_dependency('test-unit', '~> 2.5.5')
 
   spec.add_development_dependency('rake')
   spec.add_development_dependency('mocha', '~> 0.13.0')
   spec.add_development_dependency('rails', '>= 4.2')
   spec.add_development_dependency('thor')
+  spec.add_development_dependency('money')
 end
