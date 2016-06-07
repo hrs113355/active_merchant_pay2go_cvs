@@ -1,26 +1,15 @@
-# ActiveMerchantPay2go
+# ActiveMerchantPay2goCvs
 
-This plugin is an active_merchant patch for Pay2go(智付寶) online payment in Taiwan.
-Now it supports Credit card(信用卡), ATM(ATM轉帳), and CVS(超商繳費).
+智付寶超商代碼幕後取號的 ActiveMerchant plugin,，並不是透過 MPG (Multi Payment Gateway) 進行串接，而是專門為了在不離開網站的情況下幕後取得超商代碼，與 CVS API gateway 介接。
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'active_merchant_pay2go', '>=0.1'
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install active_merchant_pay2go
+    gem 'active_merchant_pay2go_cvs', github:'hrs113355/active_merchant_pay2go_cvs'
 
 ## Usage
 
-You can get Payment API and SPEC in [Pay2go API](https://www.pay2go.com/info/site_description/api_description).
-Then create an initializer, like initializers/pay2go.rb. Add the following configurations depends on your settings.
 
 ``` ruby
 
@@ -38,51 +27,54 @@ end
 
 ``` ruby
 
-# initializers/pay2go.rb
-ActiveMerchant::Billing::Integrations::Pay2go.setup do |pay2go|
-  if Rails.env.development?
-    # change to yours
-    pay2go.merchant_id = '5455626'
-    pay2go.hash_key    = '5294y06JbISpM5x9'
-    pay2go.hash_iv     = 'v77hoKGq4kWxNNIS'
-  else
-    # change to yours
-    pay2go.merchant_id = '7788520'
-    pay2go.hash_key    = 'adfas123412343j'
-    pay2go.hash_iv     = '123ddewqerasdfas'
-  end
+# initializers/pay2go_cvs.rb
+ActiveMerchant::Billing::Integrations::Pay2goCvs.setup do |pay2go_cvs|
+  pay2go_cvs.merchant_id = YOUR_MERCHANT_ID
+  pay2go_cvs.hash_key    = YOUR_HASH_KEY
+  pay2go_cvs.hash_iv     = YOUR_HASH_IV
 end
 ```
 
 ## Example Usage
 
-Once you’ve configured ActiveMerchantPay2go, you need a checkout form; it looks like:
+Once you’ve configured ActiveMerchantPay2goCvs, you need a checkout form; it looks like:
 
 ``` ruby
   <% payment_service_for  @order,
                           @order.user.email,
                           :service => :pay2go,
+                          :credential3 => get_cvs_order_path, # 用來接收參數並幕後取得超商代碼的 controller/action URL
                           :html    => { :id => 'pay2go-checkout-form', :method => :post } do |service| %>
     <% service.merchant_order_no @order.payments.last.identifier %>
-    <% service.respond_type "String" %>
+    <% service.respond_type "JSON" %>
     <% service.time_stamp @order.created_at.to_i %>
-    <% service.version "1.2" %>
-    <% service.item_desc @order.number %>
+    <% service.version "1.0" %>
+    <% service.product_desc @order.number %>
     <% service.amt @order.money %>
     <% service.email @order.buyer.email %>
-    <% service.login_type 0 %>
-    <% service.client_back_url spree.orders_account_url %>
+    <% service.expire_date (@order.created_at + 7.days).strftime('%Y%m%d') %>
     <% service.notify_url pay2go_return_url %>
     <% service.encrypted_data %>
     <%= submit_tag 'Buy!' %>
   <% end %>
 ```
 
-Also need a notification action when Pay2go service notifies your server; it looks like:
+And add fetcher to the customized service url (the `credential3` field) to process CVS code fetching.
+
+```ruby
+  class OrdersController < ApplicationController
+  
+    def get_cvs
+      fetch_result = ActiveMerchant::Billing::Integrations::Pay2goCvs::Fetcher.new(params).fetch
+      cvs_code = fetch_result['Result']['CVSCode']
+    end
+```
+
+Also need a notification action when Pay2goCvs service notifies your server; it looks like:
 
 ``` ruby
   def notify
-    notification = ActiveMerchant::Billing::Integrations::Pay2go::Notification.new(request.raw_post)
+    notification = ActiveMerchant::Billing::Integrations::Pay2goCvs::Notification.new(request.raw_post)
 
     order = Order.find_by_number(notification.merchant_order_no)
 
@@ -97,23 +89,10 @@ Also need a notification action when Pay2go service notifies your server; it loo
 ```
 
 ## Troublechooting
-If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/pay2go.rb. 
+If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/pay2go_cvs.rb. 
 ```
 require "active_merchant/billing/integrations/action_view_helper"
 ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
 ```
 
-## TODOs
-* Transaction Query Review
-* CreditCard Refund
-* CreditCard Inst（定期定額）
-* Electronic Invoice
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
 
