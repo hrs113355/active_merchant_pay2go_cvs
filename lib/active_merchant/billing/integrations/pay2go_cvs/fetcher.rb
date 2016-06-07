@@ -18,7 +18,7 @@ module ActiveMerchant #:nodoc:
           def fetch
             result = RestClient.post ActiveMerchant::Billing::Integrations::Pay2goCvs.gateway_url, { 
               MerchantID_: ActiveMerchant::Billing::Integrations::Pay2goCvs.merchant_id,
-              PostData_: self.encrypted_data(@params.to_query)
+              PostData_: self.class.encrypted_data(@params.to_query)
             }
             if @params['RespondType'] == 'JSON'
               JSON.parse(result)
