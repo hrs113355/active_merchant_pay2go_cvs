@@ -23,7 +23,7 @@ module ActiveMerchant #:nodoc:
           mode = ActiveMerchant::Billing::Base.integration_mode
           case mode
           when :production
-            'https://web.pay2go.com/gateway/cvs'
+            'https://web.pay2go.com/API/gateway/cvs'
           when :development
             'https://cweb.pay2go.com/API/gateway/cvs'
           when :test
