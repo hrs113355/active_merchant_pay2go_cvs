@@ -1,17 +1,17 @@
 require 'test_helper'
 
-class Pay2goNotificationTest < Test::Unit::TestCase
+class Pay2goCvsNotificationTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
 
   def setup
-    ActiveMerchant::Billing::Integrations::Pay2go.hash_key = '1234567'
-    ActiveMerchant::Billing::Integrations::Pay2go.hash_iv = 'abcdefg'
-    @pay2go_string = Pay2go::Notification.new(string_raw_data)
-    @pay2go_json = Pay2go::Notification.new(json_raw_data)
+    ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_key = '1234567'
+    ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_iv = 'abcdefg'
+    @pay2go_cvs_string = Pay2goCvs::Notification.new(string_raw_data)
+    @pay2go_cvs_json = Pay2goCvs::Notification.new(json_raw_data)
   end
 
   def test_json_params
-    p = @pay2go_json
+    p = @pay2go_cvs_json
 
     assert_equal '30', p.amt
     assert_equal '201407310950239561', p.merchant_order_no
@@ -25,7 +25,7 @@ class Pay2goNotificationTest < Test::Unit::TestCase
   end
 
   def test_string_params
-    p = @pay2go_string
+    p = @pay2go_cvs_string
 
     assert_equal '30', p.amt
     assert_equal '201407310943544334', p.merchant_order_no
@@ -39,23 +39,23 @@ class Pay2goNotificationTest < Test::Unit::TestCase
   end
 
   def test_json_complete?
-    assert @pay2go_json.complete?
+    assert @pay2go_cvs_json.complete?
   end
 
   def test_json_checksum_ok?
-    assert @pay2go_json.checksum_ok?
+    assert @pay2go_cvs_json.checksum_ok?
 
-    assert @pay2go_json._params['CheckCode'].present?
+    assert @pay2go_cvs_json._params['CheckCode'].present?
   end
 
   def test_string_complete?
-    assert @pay2go_string.complete?
+    assert @pay2go_cvs_string.complete?
   end
 
   def test_string_checksum_ok?
-    assert @pay2go_string.checksum_ok?
+    assert @pay2go_cvs_string.checksum_ok?
 
-    assert @pay2go_string._params['CheckCode'].present?
+    assert @pay2go_cvs_string._params['CheckCode'].present?
   end
 
   private

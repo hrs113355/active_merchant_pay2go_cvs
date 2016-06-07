@@ -9,7 +9,7 @@ rescue LoadError => e
   puts "Error loading bundler (#{e.message}): \"gem install bundler\" for bundler support."
 end
 
-require 'active_merchant_pay2go'
+require 'active_merchant_pay2go_cvs'
 
 require 'test/unit'
 require 'money'

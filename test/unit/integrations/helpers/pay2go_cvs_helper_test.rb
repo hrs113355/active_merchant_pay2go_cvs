@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class Pay2goHelperTest < Test::Unit::TestCase
+class Pay2goCvsHelperTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
   
   def setup
   end
 
   def test_check_value
-    @helper = Pay2go::Helper.new '20140901001', '123456'
+    @helper = Pay2goCvs::Helper.new '20140901001', '123456'
     @helper.add_field 'MerchantID', '123456'
     @helper.add_field 'TimeStamp', '1403243286'
     @helper.add_field 'MerchantOrderNo','20140901001'
@@ -16,8 +16,8 @@ class Pay2goHelperTest < Test::Unit::TestCase
     @helper.add_field 'ItemDesc', 'djklfjai23ojf'
     @helper.add_field 'RespondType', 'JSON'
 
-    ActiveMerchant::Billing::Integrations::Pay2go.hash_key = '1A3S21DAS3D1AS65D1'
-    ActiveMerchant::Billing::Integrations::Pay2go.hash_iv = '1AS56D1AS24D'
+    ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_key = '1A3S21DAS3D1AS65D1'
+    ActiveMerchant::Billing::Integrations::Pay2goCvs.hash_iv = '1AS56D1AS24D'
 
     @helper.encrypted_data
 
