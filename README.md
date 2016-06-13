@@ -2,6 +2,8 @@
 
 智付寶超商代碼幕後取號的 ActiveMerchant plugin,，並不是透過 MPG (Multi Payment Gateway) 進行串接，而是專門為了在不離開網站的情況下幕後取得超商代碼，與 CVS API gateway 介接。
 
+    注意: 進行此種串接方式須先和智付寶聯絡，開通此功能權限後方可使用。
+
 ## Installation
 
 Add this line to your application's Gemfile:
