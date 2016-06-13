@@ -11,12 +11,10 @@ module ActiveMerchant #:nodoc:
 
           def _params
             if @_params.nil?
-              if @params.key?("JSONData") # json response type
-                # puts params['JSONData'].to_s
-                @_params = JSON.parse(@params['JSONData'].to_s)
-                # puts JSON.parse(@_params['Result'])['Amt']
+              if @params.key?("Result") # result data in json
+                @_params = @params
                 @_params = @_params.merge(JSON.parse(@_params['Result']))
-              else # string response type
+              else
                 @_params = @params
               end
             end

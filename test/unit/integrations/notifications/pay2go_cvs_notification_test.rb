@@ -19,7 +19,7 @@ class Pay2goCvsNotificationTest < Test::Unit::TestCase
     assert_equal 'CREDIT', p.payment_type
     assert_equal '14073109503001857', p.trade_no
     assert_equal '2014-07-31 09:50:38', p.pay_time
-    assert_equal '信用卡授權成功', p.message
+    assert_equal '付款成功', p.message
     assert_equal '457958', p.card_6no
     assert_equal '3430112', p.merchant_id
   end
@@ -61,7 +61,7 @@ class Pay2goCvsNotificationTest < Test::Unit::TestCase
   private
 
   def json_raw_data
-    'JSONData={"Status": "SUCCESS","Message": "信用卡授權成功","Result": "{\"MerchantID\":\"3430112\",\"Amt\":30,\"TradeNo\":\"14073109503001857\",\"MerchantOrderNo\":\"201407310950239561\",\"RespondType\":\"JSON\",\"CheckCode\":\"7D3646868F8E674B01C6DDA90C6D2AC68F44C63F13A7671BC4888224220A7E20\",\"PaymentType\":\"CREDIT\",\"RespondCode\":\"54\",\"Auth\":\"\",\"Card6No\":\"457958\",\"Card4No\":\"5509\",\"ECI\":\"\",\"PayTime\":\"2014-07-31 09:50:38\"}"}'
+    'Status=SUCCESS&Message=付款成功&Result={"MerchantID":"3430112","Amt":30,"TradeNo":"14073109503001857","MerchantOrderNo":"201407310950239561","RespondType":"JSON","CheckCode":"7D3646868F8E674B01C6DDA90C6D2AC68F44C63F13A7671BC4888224220A7E20","PaymentType":"CREDIT","RespondCode":"54","Auth":"","Card6No":"457958","Card4No":"5509","ECI":"","PayTime":"2014-07-31 09:50:38"}'
   end
 
   def string_raw_data
