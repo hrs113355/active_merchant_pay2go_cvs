@@ -34,7 +34,7 @@ module ActiveMerchant #:nodoc:
             end
           end
 
-          def checksum_ok?
+          def calculate_checksum
             params_copy = _params.clone
 
             check_fields = [:"Amt", :"MerchantID", :"MerchantOrderNo", :"TradeNo"]
@@ -46,7 +46,11 @@ module ActiveMerchant #:nodoc:
 
             sha256 = Digest::SHA256.new
             sha256.update hash_raw_data.force_encoding("utf-8")
-            (sha256.hexdigest.upcase == check_code.to_s)
+            sha256.hexdigest.upcase
+          end
+
+          def checksum_ok?
+            calculate_checksum == check_code.to_s
           end
 
           def status
