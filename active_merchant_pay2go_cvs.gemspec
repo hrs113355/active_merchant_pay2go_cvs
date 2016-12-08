@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency('rake')
   spec.add_development_dependency('mocha', '~> 0.13.0')
   spec.add_development_dependency('rails', '>= 4.2')
+  spec.add_development_dependency('rack', '< 2')
   spec.add_development_dependency('thor')
   spec.add_development_dependency('money')
 end
