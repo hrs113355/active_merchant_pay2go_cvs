@@ -23,11 +23,11 @@ module ActiveMerchant #:nodoc:
           mode = ActiveMerchant::Billing::Base.integration_mode
           case mode
           when :production
-            'https://web.pay2go.com/API/gateway/cvs'
+            'https://core.spgateway.com/API/gateway/cvs'
           when :development
-            'https://cweb.pay2go.com/API/gateway/cvs'
+            'https://ccore.spgateway.com/API/gateway/cvs'
           when :test
-            'https://cweb.pay2go.com/API/gateway/cvs'
+            'https://ccore.spgateway.com/API/gateway/cvs'
           else
             raise StandardError, "Integration mode set to an invalid value: #{mode}"
           end
