@@ -31,8 +31,10 @@ module ActiveMerchant #:nodoc:
           mapping :allow_store, 'AllowStore'
           # 支付通知網址
           mapping :notify_url, 'NotifyURL'
-          # 繳費有限期限，格式範例：20140620
+          # 繳費有限日期，格式範例：20140620 (YYYYmmdd)
           mapping :expire_date, 'ExpireDate'
+          # 繳費有限時間，格式範例：235959 (HHMMSS)
+          mapping :expire_time, 'ExpireTime'
           # 付款人電子信箱
           mapping :email, 'Email'
           mapping :credential3, 'CustomizedUrl'

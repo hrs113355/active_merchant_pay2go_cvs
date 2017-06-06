@@ -30,7 +30,7 @@ module ActiveMerchant #:nodoc:
           private
 
           def pay2go_params(params)
-            params.slice(:RespondType, :TimeStamp, :Version, :MerchantOrderNo, :Amt, :ProdDesc, :AllowStore, :NotifyURL, :ExpireDate, :Email)
+            params.slice(:RespondType, :TimeStamp, :Version, :MerchantOrderNo, :Amt, :ProdDesc, :AllowStore, :NotifyURL, :ExpireDate, :ExpireTime, :Email)
           end
 
           def self.padding(str, blocksize = 32)
